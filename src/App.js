@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Welcome to Stackbill loves kubernetes
+          Welcome to assistanz loves kubernetes
         </p>
         <a
           className="App-link"
