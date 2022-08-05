@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Welcome to ravikarthi loves kubernetes
+          We like CI/CD
         </p>
         <a
           className="App-link"
