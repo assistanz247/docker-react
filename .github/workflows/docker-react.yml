@@ -14,15 +14,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Generate Deployment Package
+      run: zip -r deploy.zip * -x "**node_modules**"
+
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
     - name: Build the Docker image
       run: 
         docker build -t assistanz247/docker-react -f Dockerfile .
+
     - name: Docker Push
       run: docker push ${{secrets.DOCKER_USER}}/docker-react
-    
+
+    - name: deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: docker-react
+        environment_name: Dockerreact-env
+        region: us-west-2
+        deployment_package: deploy.zip
